@@ -50,13 +50,28 @@ public class PrefabPool : MonoBehaviour
             //find an inactive gameobject and activate it.
             for (int i = 0; i < InactiveGameObjects.Count; i++)
             {
-                if (go.Compare(InactiveGameObjects[i]))
+                //when go is a prefab, parent should be null.
+                if (go.transform.parent == null)
                 {
-                    newGo = InactiveGameObjects[i];
-                    InactiveGameObjects[i].SetActive(true);
-                    InactiveGameObjects[i].transform.position = position;
-                    InactiveGameObjects[i].transform.rotation = rotation;
-                    numberToActiavte--;
+                    if (go.Compare(InactiveGameObjects[i]))
+                    {
+                        newGo = InactiveGameObjects[i];
+                        InactiveGameObjects[i].SetActive(true);
+                        InactiveGameObjects[i].transform.position = position;
+                        InactiveGameObjects[i].transform.rotation = rotation;
+                        numberToActiavte--;
+                    }
+                }
+                else
+                {
+                    if(InactiveGameObjects[i].GetInstanceID() == go.GetInstanceID())
+                    {
+                        newGo = InactiveGameObjects[i];
+                        InactiveGameObjects[i].SetActive(true);
+                        InactiveGameObjects[i].transform.position = position;
+                        InactiveGameObjects[i].transform.rotation = rotation;
+                        numberToActiavte--;
+                    }
                 }
             }
             //if an inactive object isnt found, spawn a new one
@@ -80,6 +95,7 @@ public class PrefabPool : MonoBehaviour
         GameObject deactivatedObject = null;
         for (int i = 0; i < ActiveGameObjects.Count; i++)
         {
+            //when go is a prefab, parent should be null.
             if (go.transform.parent == null)
             {
                 //match with the prefab's name only
