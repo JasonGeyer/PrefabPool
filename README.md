@@ -10,6 +10,8 @@ will activate that specific instance. If refering to a prefab, it will activate 
 match on the Inactive list. If the object is not on the list yet, a new one will be instantiated
 and added to the pool.
 
+Activate has optional parameters for position, rotation, and the number to activate.
+
 Deactivation works about the same. If refering to an instance, it will deactivate that instance if
 it is in the pool. If refering to a prefab, it will activate the first match on the active list (which is
 usually going to be the oldest one unless another script interferes with this order).
